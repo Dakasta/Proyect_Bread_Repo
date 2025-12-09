@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "Player",
+    "maps": [
+        {
+            "name": "Personaje",
+            "id": "9afe013e-3ef0-4a2a-8bb8-e4544051cc03",
+            "actions": [
+                {
+                    "name": "correr",
+                    "type": "Value",
+                    "id": "e9b5b897-d8e6-448d-9c99-8826ae78ecb3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3f0861f9-22e3-48f3-b180-e11924c9fc38",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "correr",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
