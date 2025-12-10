@@ -45,4 +45,30 @@ public class PlayerController2D : MonoBehaviour
 
     }
 
+
+
+    #region impuf methods
+    public void OnMove(InputAction.CallbackContext context)
+    {
+
+        moveInput = context.ReadValue<Vector2>();
+
+    }
+    public void OnJump(InputAction.CallbackContext context)
+    {
+
+
+
+    }
+    public void OnAtack(InputAction.CallbackContext context)
+    {
+
+
+
+    }
+
+    #endregion
+
+
+
 }
