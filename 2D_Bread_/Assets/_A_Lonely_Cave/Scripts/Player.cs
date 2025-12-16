@@ -1,12 +1,12 @@
 using System.Collections;
-using System.Collections.Genetic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
 
 
-    private RigidBody2D playerRB;
+    private Rigidbody2D playerRb;
     private Animator anim;
     private float horizontalInput;
 
@@ -18,14 +18,31 @@ public class Player : MonoBehaviour
     void Start()
     {
 
-        playerRB = GetComponent<Rigidbody2D>();
+        playerRb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Movement();
+        Jump();
     }
+
+    void Movement()
+    {
+        horizontalInput = Input.GetAxis("Horizontal");
+        playerRb.linearVelocity = new Vector2(horizontalInput * speed, playerRb.linearVelocity.y);
+    }
+
+    void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+
+        }
+    }
+
 }
