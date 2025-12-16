@@ -1,48 +1,94 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-
-public class Player : MonoBehaviour
+using UnityEngine.InputSystem;
+public class PlayerController2D : MonoBehaviour
 {
-
-
-    private Rigidbody2D playerRb;
-    private Animator anim;
-    private float horizontalInput;
-
-
-
-    public float speed;
-    public float jumpForce;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
+    [Header("Movement And Jump Configuration")]
+    [SerializeField] float Speed = 6;
+    [SerializeField] float Jumpforce = 6;
+    [SerializeField] bool IsGrounded;
+    [SerializeField] float GroundCheckRadius;
+    [SerializeField] LayerMask GroundLayer;
+
+
+    [SerializeField] Transform Groundcheck;//referencia posicion suelo
+    Rigidbody2D playerRb;
+    Animator anim;
+    PlayerInput input;
+    Vector2 moveInput;
+
+    private void Awake()
+    {
+        playerRb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        input = GetComponent<PlayerInput>();
+    }
     void Start()
     {
 
-        playerRb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-
     }
 
-    // Update is called once per frame
     void Update()
     {
+        IsGrounded = Physics2D.OverlapCircle(Groundcheck.position, GroundCheckRadius, GroundLayer);
+        //AnimationManagement();
+
+    }
+    private void FixedUpdate()
+    {
         Movement();
-        Jump();
     }
 
+    void Flip()
+    {
+
+
+
+
+
+    }
+    /*void AnimationManagement()
+    {
+        //anim.SetBool("Jumping", !IsGrounded);
+        if (moveInput.x != 0) anim.SetBool("Walk", true);
+        else anim.SetBool("Walk", false);
+
+    }*/
     void Movement()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        playerRb.linearVelocity = new Vector2(horizontalInput * speed, playerRb.linearVelocity.y);
-    }
 
-    void Jump()
+        playerRb.linearVelocity = new Vector2(moveInput.x * Speed, playerRb.linearVelocity.y);
+    }
+    // Update is called once per frame
+
+
+
+
+    #region imput methods
+    public void OnMove(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
 
-        }
+        moveInput = context.ReadValue<Vector2>();
+
     }
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        //if (context.performed && IsGrounded) Jump();
+
+
+    }
+    public void OnAtack(InputAction.CallbackContext context)
+    {
+
+        if (context.performed && IsGrounded) anim.SetTrigger("Atack");
+
+    }
+
+    #endregion
+
+
 
 }
