@@ -944,8 +944,8 @@ GameObject:
   - component: {fileID: 1334304416}
   - component: {fileID: 1334304415}
   - component: {fileID: 1334304418}
-  - component: {fileID: 1334304420}
   - component: {fileID: 1334304421}
+  - component: {fileID: 1334304422}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1213,26 +1213,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1334304420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1334304407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0706237227ec0a44b6a20df6f6b6701, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController2D
-  Speed: 6
-  Jumpforce: 6
-  IsGrounded: 0
-  GroundCheckRadius: 0.1
-  GroundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  Groundcheck: {fileID: 910532693}
 --- !u!114 &1334304421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1268,13 +1248,13 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/Attack[/Mouse/leftButton]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: d0706237227ec0a44b6a20df6f6b6701, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1334304422}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1287,6 +1267,28 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1334304422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334304407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0706237227ec0a44b6a20df6f6b6701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  speed: 5
+  jumpForce: 5
+  isFacingRight: 0
+  isGrounded: 0
+  groundCheck: {fileID: 910532693}
+  groundCheckRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  respawnPoint: {fileID: 0}
 --- !u!1 &1496776713
 GameObject:
   m_ObjectHideFlags: 0

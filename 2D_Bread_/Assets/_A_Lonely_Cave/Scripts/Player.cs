@@ -1,94 +1,98 @@
-using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class PlayerController2D : MonoBehaviour
+
+public class Player : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Player Stats")]
+    [SerializeField] float speed;
+    [SerializeField] float jumpForce;
+    [SerializeField] bool isFacingRight;
 
 
-    [Header("Movement And Jump Configuration")]
-    [SerializeField] float Speed = 6;
-    [SerializeField] float Jumpforce = 6;
-    [SerializeField] bool IsGrounded;
-    [SerializeField] float GroundCheckRadius;
-    [SerializeField] LayerMask GroundLayer;
+    [Header("GroundCheck Configuration")]
+    [SerializeField] bool isGrounded;
+    [SerializeField] Transform groundCheck;
+    [SerializeField] float groundCheckRadius = 0.2f;
+    [SerializeField] LayerMask groundLayer;
 
-
-    [SerializeField] Transform Groundcheck;//referencia posicion suelo
-    Rigidbody2D playerRb;
-    Animator anim;
-    PlayerInput input;
+    [Header("Respawn Configuration")]
+    [SerializeField] Transform respawnPoint;
+     Rigidbody2D rb;
     Vector2 moveInput;
 
-    private void Awake()
-    {
-        playerRb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        input = GetComponent<PlayerInput>();
-    }
+    
+   
+
+
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        isFacingRight = true;
+
+      
+
+
 
     }
 
-    void Update()
+     void Update()
     {
-        IsGrounded = Physics2D.OverlapCircle(Groundcheck.position, GroundCheckRadius, GroundLayer);
-        //AnimationManagement();
-
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+       
+        Flip();
     }
+
     private void FixedUpdate()
     {
         Movement();
     }
 
-    void Flip()
+    void Respawn()
     {
-
-
-
-
+        transform.position = respawnPoint.position;
 
     }
-    /*void AnimationManagement()
-    {
-        //anim.SetBool("Jumping", !IsGrounded);
-        if (moveInput.x != 0) anim.SetBool("Walk", true);
-        else anim.SetBool("Walk", false);
-
-    }*/
     void Movement()
     {
+       rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
 
-        playerRb.linearVelocity = new Vector2(moveInput.x * Speed, playerRb.linearVelocity.y);
     }
-    // Update is called once per frame
+
+   void Flip()
+    {
+        if (moveInput.x > 0 && !isFacingRight)
+        {
+            isFacingRight = true;
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+        }
+
+        if (moveInput.x < 0 && isFacingRight)
+        {
+            isFacingRight = false;
+            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+        }
 
 
+    }
 
+    #region Input Methods
 
-    #region imput methods
     public void OnMove(InputAction.CallbackContext context)
     {
-
         moveInput = context.ReadValue<Vector2>();
-
     }
+
     public void OnJump(InputAction.CallbackContext context)
     {
-        //if (context.performed && IsGrounded) Jump();
-
-
-    }
-    public void OnAtack(InputAction.CallbackContext context)
-    {
-
-        if (context.performed && IsGrounded) anim.SetTrigger("Atack");
-
+        if (context.started && isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+        }
     }
 
     #endregion
-
-
 
 }
