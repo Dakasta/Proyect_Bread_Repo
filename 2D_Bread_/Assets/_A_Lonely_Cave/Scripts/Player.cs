@@ -6,6 +6,11 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+
+
+    [SerializeField] private GameObject sword;
+    [SerializeField] private float attackDuration = 0.2f;
+
     [Header("Player Stats")]
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
@@ -49,7 +54,21 @@ public class Player : MonoBehaviour
     {
         Movement();
     }
+    private IEnumerator AttackCoroutine()
+    {
+        float direction = isFacingRight ? 1f : -1f;
+        sword.transform.localPosition = new Vector3(0.6f * direction, 0.2f, 0);
 
+        sword.SetActive(true);
+
+        yield return new WaitForSeconds(0.2f);
+
+        sword.SetActive(false);
+    }
+    void Attack()
+    {
+        StartCoroutine(AttackCoroutine());
+    }
     void Respawn()
     {
         transform.position = respawnPoint.position;
@@ -90,6 +109,13 @@ public class Player : MonoBehaviour
         if (context.started && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+        }
+    }
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Attack();
         }
     }
 
