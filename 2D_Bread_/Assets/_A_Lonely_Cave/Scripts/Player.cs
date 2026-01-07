@@ -56,13 +56,19 @@ public class Player : MonoBehaviour
     }
     private IEnumerator AttackCoroutine()
     {
-        float direction = isFacingRight ? 1f : -1f;
-        sword.transform.localPosition = new Vector3(0.6f * direction, 0.2f, 0);
+        if (isFacingRight)
+        {
+            // Ataca a la derecha
+            sword.transform.localPosition = new Vector3(0.6f, 0.2f, 0);
+        }
+        else
+        {
+            // Ataca a la izquierda
+            sword.transform.localPosition = new Vector3(-0.6f, 0.2f, 0);
+        }
 
         sword.SetActive(true);
-
-        yield return new WaitForSeconds(0.2f);
-
+        yield return new WaitForSeconds(attackDuration);
         sword.SetActive(false);
     }
     void Attack()
