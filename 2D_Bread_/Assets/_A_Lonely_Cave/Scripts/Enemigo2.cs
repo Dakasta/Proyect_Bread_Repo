@@ -12,7 +12,7 @@ public class Enemigo2 : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
        
-        if (collision.gameObject.CompareTag("Suelo"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
            
             Destroy(gameObject, 1f);

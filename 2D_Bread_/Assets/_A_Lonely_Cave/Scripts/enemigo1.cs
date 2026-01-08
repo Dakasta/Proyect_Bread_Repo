@@ -5,7 +5,7 @@ public class enemigo1 : MonoBehaviour
     public GameObject projectilePrefab;
     public float shootInterval = 1.5f;
     public Transform firePoint;
-
+    private Rigidbody2D rb;
     void Start()
     {
         InvokeRepeating(nameof(Shoot), 1f, shootInterval);
