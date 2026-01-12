@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Tilemaps;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-
-
     [SerializeField] private GameObject sword;
     [SerializeField] private float attackDuration = 0.2f;
 
@@ -15,7 +11,6 @@ public class Player : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
     [SerializeField] bool isFacingRight;
-
 
     [Header("GroundCheck Configuration")]
     [SerializeField] bool isGrounded;
@@ -25,82 +20,104 @@ public class Player : MonoBehaviour
 
     [Header("Respawn Configuration")]
     [SerializeField] Transform respawnPoint;
-     Rigidbody2D rb;
+
+    Rigidbody2D rb;
     Vector2 moveInput;
-
-    
-   
-
+    Vector2 attackDirection;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         isFacingRight = true;
-
-      
-
-
-
+        sword.SetActive(false);
     }
 
-     void Update()
+    void Update()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-       
+        isGrounded = Physics2D.OverlapCircle(
+            groundCheck.position,
+            groundCheckRadius,
+            groundLayer
+        );
+
         Flip();
+        UpdateAttackDirection();
     }
 
     private void FixedUpdate()
     {
         Movement();
     }
-    private IEnumerator AttackCoroutine()
+
+    // 🔹 Determina la dirección del ataque
+    void UpdateAttackDirection()
     {
-        if (isFacingRight)
+        if (moveInput != Vector2.zero)
         {
-            // Ataca a la derecha
-            sword.transform.localPosition = new Vector3(0.6f, 0.2f, 0);
+            attackDirection = moveInput.normalized;
         }
         else
         {
-            // Ataca a la izquierda
-            sword.transform.localPosition = new Vector3(-0.6f, 0.2f, 0);
+            attackDirection = isFacingRight ? Vector2.right : Vector2.left;
+        }
+    }
+
+    private IEnumerator AttackCoroutine()
+    {
+        Vector3 swordPosition = Vector3.zero;
+
+        if (attackDirection.y > 0.5f) // Arriba
+        {
+            swordPosition = new Vector3(0f, 0.6f, 0);
+        }
+        else if (attackDirection.y < -0.5f) // Abajo
+        {
+            swordPosition = new Vector3(0f, -0.6f, 0);
+        }
+        else if (attackDirection.x > 0) // Derecha
+        {
+            swordPosition = new Vector3(0.6f, 0.2f, 0);
+        }
+        else if (attackDirection.x < 0) // Izquierda
+        {
+            swordPosition = new Vector3(0.6f, 0.2f, 0); 
         }
 
+        sword.transform.localPosition = swordPosition;
         sword.SetActive(true);
+
         yield return new WaitForSeconds(attackDuration);
+
         sword.SetActive(false);
     }
+
     void Attack()
     {
         StartCoroutine(AttackCoroutine());
     }
+
     void Respawn()
     {
         transform.position = respawnPoint.position;
-
     }
+
     void Movement()
     {
-       rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
-
+        rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
     }
 
-   void Flip()
+    void Flip()
     {
         if (moveInput.x > 0 && !isFacingRight)
         {
             isFacingRight = true;
             transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         }
-
-        if (moveInput.x < 0 && isFacingRight)
+        else if (moveInput.x < 0 && isFacingRight)
         {
             isFacingRight = false;
             transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
-
-
     }
 
     #region Input Methods
@@ -114,9 +131,10 @@ public class Player : MonoBehaviour
     {
         if (context.started && isGrounded)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
+
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -126,5 +144,4 @@ public class Player : MonoBehaviour
     }
 
     #endregion
-
 }
