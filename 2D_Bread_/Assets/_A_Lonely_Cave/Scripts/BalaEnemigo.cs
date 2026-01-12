@@ -14,6 +14,8 @@ public class BalaEnemigo : MonoBehaviour
     public void SetDirection(Vector2 direction)
     {
         rb.linearVelocity = direction.normalized * speed;
+
+        Destroy(gameObject, 4f);
     }
 
     public void SetTarget(Transform target)
@@ -23,6 +25,17 @@ public class BalaEnemigo : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+
+        if (collision.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
+
+        if (collision.CompareTag("enemigo"))
+        {
+            Destroy(gameObject);
+        }
         // Si la espada golpea la bola
         if (collision.CompareTag("Sword"))
         {
@@ -32,7 +45,13 @@ public class BalaEnemigo : MonoBehaviour
                     (cubeTarget.position - transform.position).normalized;
 
                 SetDirection(directionToCube);
+
+                Destroy(gameObject, 5f);
+
+
             }
+           
+
         }
     }
 }

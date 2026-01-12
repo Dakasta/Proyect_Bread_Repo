@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Sword
   - Ground
+  - enemigo
   layers:
   - Default
   - TransparentFX

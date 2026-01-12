@@ -26,5 +26,6 @@ public class enemigo1 : MonoBehaviour
 
         projectile.SetTarget(transform);
         projectile.SetDirection(direction);
+
     }
 }
