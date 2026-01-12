@@ -9,9 +9,20 @@ public class enemigo1 : MonoBehaviour
     void Start()
     {
         InvokeRepeating(nameof(Shoot), 1f, shootInterval);
-    }
 
-    void Shoot()
+
+
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.CompareTag("Bala"))
+        {
+            Destroy(gameObject);
+        }
+
+    }
+        void Shoot()
     {
         GameObject proj = Instantiate(
             projectilePrefab,

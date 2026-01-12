@@ -271,9 +271,9 @@ MonoBehaviour:
   speed: 2
   topPoint: {fileID: 938364383}
   bottomPoint: {fileID: 1715331582}
-  projectilePrefab: {fileID: 0}
+  ProjectilePrefab: {fileID: 1479649868}
   shootInterval: 1.5
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 703851087}
 --- !u!1 &703851086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,7 +1055,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &1062340475
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1820,7 +1820,7 @@ GameObject:
   - component: {fileID: 1354792670}
   m_Layer: 0
   m_Name: Bala
-  m_TagString: Untagged
+  m_TagString: Bala
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1989,7 +1989,7 @@ GameObject:
   - component: {fileID: 1479649873}
   m_Layer: 0
   m_Name: Circle
-  m_TagString: Untagged
+  m_TagString: Bala
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2124,7 +2124,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -2142,7 +2142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88a477b7b5e03f4f83ce92bff7ddf27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BalaEnemigo2
-  speed: 8
+  speed: 3
 --- !u!1 &1496776713
 GameObject:
   m_ObjectHideFlags: 0
@@ -2305,7 +2305,7 @@ Transform:
   m_GameObject: {fileID: 1715331581}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.14709, y: -0.56913996, z: 0}
+  m_LocalPosition: {x: 3.14709, y: 0.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

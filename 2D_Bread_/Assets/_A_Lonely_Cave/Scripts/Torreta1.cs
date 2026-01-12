@@ -13,7 +13,7 @@ public class Torreta1 : MonoBehaviour
 
 
 
-    public GameObject projectilePrefab;
+    public GameObject ProjectilePrefab;
     public float shootInterval = 1.5f;
     public Transform firePoint;
     private Rigidbody2D rb;
@@ -31,7 +31,7 @@ public class Torreta1 : MonoBehaviour
     void Shoot()
     {
         GameObject proj = Instantiate(
-            projectilePrefab,
+            ProjectilePrefab,   
             firePoint.position,
             Quaternion.identity
         );

@@ -7,6 +7,7 @@ TagManager:
   - Sword
   - Ground
   - enemigo
+  - Bala
   layers:
   - Default
   - TransparentFX
