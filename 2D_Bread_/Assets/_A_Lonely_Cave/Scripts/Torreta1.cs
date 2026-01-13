@@ -65,6 +65,16 @@ public class Torreta1 : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.CompareTag("Bala"))
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {

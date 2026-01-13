@@ -175,9 +175,10 @@ GameObject:
   - component: {fileID: 672227386}
   - component: {fileID: 672227385}
   - component: {fileID: 672227387}
+  - component: {fileID: 672227388}
   m_Layer: 0
   m_Name: Torreta1
-  m_TagString: Untagged
+  m_TagString: Torreta1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -274,6 +275,52 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 1479649868}
   shootInterval: 1.5
   firePoint: {fileID: 703851087}
+--- !u!61 &672227388
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672227384}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.040940642, y: 0.015083373}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.74573684, y: 0.8836421}
+  m_EdgeRadius: 0
 --- !u!1 &703851086
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +332,7 @@ GameObject:
   - component: {fileID: 703851087}
   m_Layer: 0
   m_Name: firePoint
-  m_TagString: Untagged
+  m_TagString: fire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -299,7 +346,7 @@ Transform:
   m_GameObject: {fileID: 703851086}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7, y: -0.09, z: 0}
+  m_LocalPosition: {x: -0.567, y: -0.008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2128,8 +2175,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Offset: {x: -0.003101545, y: 0}
+  m_Radius: 0.567649
 --- !u!114 &1479649873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2143,6 +2190,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BalaEnemigo2
   speed: 3
+  Torreta: {fileID: 672227386}
+  Parry: 0
 --- !u!1 &1496776713
 GameObject:
   m_ObjectHideFlags: 0
@@ -2319,6 +2368,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 282171916576388841, guid: 7857174bc0e039e4faa91bc34c29b043, type: 3}
+      propertyPath: m_UseAutoMass
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1819884273552321403, guid: 7857174bc0e039e4faa91bc34c29b043, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2046818002995107447, guid: 7857174bc0e039e4faa91bc34c29b043, type: 3}
       propertyPath: m_Name
       value: cannon
@@ -2329,11 +2386,11 @@ PrefabInstance:
       objectReference: {fileID: 1354792669}
     - target: {fileID: 8487182609116039488, guid: 7857174bc0e039e4faa91bc34c29b043, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.86
+      value: 1.471
       objectReference: {fileID: 0}
     - target: {fileID: 8487182609116039488, guid: 7857174bc0e039e4faa91bc34c29b043, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.71
+      value: 0.672
       objectReference: {fileID: 0}
     - target: {fileID: 8487182609116039488, guid: 7857174bc0e039e4faa91bc34c29b043, type: 3}
       propertyPath: m_LocalPosition.z

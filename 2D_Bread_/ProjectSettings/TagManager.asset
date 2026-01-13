@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - enemigo
   - Bala
+  - Torreta1
+  - fire
   layers:
   - Default
   - TransparentFX
