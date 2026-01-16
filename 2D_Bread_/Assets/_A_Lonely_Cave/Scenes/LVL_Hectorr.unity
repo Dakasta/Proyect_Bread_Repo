@@ -347,10 +347,14 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LocalPosition: {x: -1.09, y: -0.008, z: 0}
 =======
   m_LocalPosition: {x: -0.81, y: -0.008, z: 0}
 >>>>>>> b6809e20d45de605f5c396dd9974072f2e3ef700
+=======
+  m_LocalPosition: {x: -0.567, y: -0.008, z: 0}
+>>>>>>> parent of b6809e2 (a)
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1033,7 +1037,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &1062340473
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2383,10 +2387,6 @@ PrefabInstance:
     - target: {fileID: 2046818002995107447, guid: 7857174bc0e039e4faa91bc34c29b043, type: 3}
       propertyPath: m_Name
       value: cannon
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046818002995107447, guid: 7857174bc0e039e4faa91bc34c29b043, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2217394138864043345, guid: 7857174bc0e039e4faa91bc34c29b043, type: 3}
       propertyPath: projectilePrefab

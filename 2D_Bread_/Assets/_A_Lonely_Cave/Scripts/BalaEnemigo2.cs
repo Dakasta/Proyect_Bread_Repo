@@ -1,4 +1,4 @@
-eusing System;
+using System;
 using UnityEngine;
 
 public class BalaEnemigo2 : MonoBehaviour
