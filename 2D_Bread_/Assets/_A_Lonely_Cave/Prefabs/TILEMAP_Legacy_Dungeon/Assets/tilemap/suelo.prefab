@@ -2935,7 +2935,11 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+<<<<<<< HEAD
 --- !u!114 &2898643531610656923
+=======
+--- !u!114 &3893793152590989846
+>>>>>>> Task_hectortilla
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
