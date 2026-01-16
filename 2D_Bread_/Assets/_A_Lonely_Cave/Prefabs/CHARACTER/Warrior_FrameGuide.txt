@@ -1,0 +1,16 @@
+Frame Guide
+
+Idle : 0-5 (6 frames)
+Run : 6-13 (8 frames)
+2 Combo attack : 14-25 (12 frames)
+Death  : 26-36 (11 frames)
+Hurt  : 37-40 (4 frames)
+Jump - UpToFall - Fall :  41-43, 44-45, 46-48 (3 - 2 - 3 frames)
+Edge Grab : 49-53 (5 frames)
+Edge Idle : 54-59 (6 frames)
+WallSlide : 60-62 (3 frames)
+Crouch : 63-68 (6 frames)
+Dash : 69-75 (7 frames)
+Dash-Attack : 76-85 (10 frames)
+Slide : 86-90 (5 Frames)
+Ladder-Grab : 91-98 (8 Frames)
