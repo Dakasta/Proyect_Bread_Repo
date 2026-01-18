@@ -303,6 +303,7 @@ GameObject:
   - component: {fileID: 852506879}
   - component: {fileID: 852506880}
   - component: {fileID: 852506881}
+  - component: {fileID: 852506882}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -471,6 +472,28 @@ MonoBehaviour:
   player: {fileID: 1334304409}
   detectionRadius: 5
   speed: 6
+--- !u!95 &852506882
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852506876}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 54e709ceb73930a4e96cf74fb4d2831f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &938364383 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4677845528798461249, guid: e27929307b459ad438de7ae0dbed69a7, type: 3}
@@ -1085,6 +1108,7 @@ GameObject:
   - component: {fileID: 1062340475}
   - component: {fileID: 1062340474}
   - component: {fileID: 1062340473}
+  - component: {fileID: 1062340477}
   m_Layer: 0
   m_Name: Merodeador
   m_TagString: Ground
@@ -1238,6 +1262,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1062340477
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062340472}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9821e86d932d5cd4bb3c98ea077ef69c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1144008181
 GameObject:
   m_ObjectHideFlags: 0
