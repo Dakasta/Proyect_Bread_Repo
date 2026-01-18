@@ -96,9 +96,12 @@ public class Player : MonoBehaviour
         StartCoroutine(AttackCoroutine());
     }
 
-    void Respawn()
+    public void Respawn()
     {
         transform.position = respawnPoint.position;
+
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
     }
 
     void Movement()
