@@ -13,6 +13,10 @@ public class BalaEnemigo2 : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+
+
+    public int damage = 1;
+
     public void SetDirection(Vector2 direction)
     {
         rb.linearVelocity = direction.normalized * speed;
@@ -61,6 +65,10 @@ public class BalaEnemigo2 : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
+
+
+            Vector2 direction = (collision.transform.position - transform.position);
+            collision.GetComponent<PlayerHealth>().TakeDamage(damage, direction);
             Destroy(gameObject);
         }
 

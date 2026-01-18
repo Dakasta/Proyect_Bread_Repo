@@ -10,6 +10,7 @@ TagManager:
   - Bala
   - Torreta1
   - fire
+  - respawnPoint
   layers:
   - Default
   - TransparentFX
