@@ -1298,7 +1298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7983289509211169496, guid: d1811e552b7c9f34aaf01cc7dee27d89, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8966175975694751927, guid: d1811e552b7c9f34aaf01cc7dee27d89, type: 3}
       propertyPath: topPoint
@@ -1329,6 +1329,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 8469411165337713804}
+    - target: {fileID: 407078515101833180, guid: 1716441243fd5e3428d36e5680d68e87, type: 3}
+      propertyPath: speed_run
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6969013276789190807, guid: 1716441243fd5e3428d36e5680d68e87, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.907
@@ -1542,7 +1546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2046818002995107447, guid: 7857174bc0e039e4faa91bc34c29b043, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2217394138864043345, guid: 7857174bc0e039e4faa91bc34c29b043, type: 3}
       propertyPath: projectilePrefab
