@@ -141,6 +141,13 @@ public class Skeleton : MonoBehaviour
 
     }
 
+
+    public void ColliderWeaponFalse()
+    {
+        Hit.GetComponent<BoxCollider2D>().enabled = false;
+
+    }
+
     void Update()
     {
         Comportamientos();
