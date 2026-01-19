@@ -18,10 +18,14 @@ public class Skeleton : MonoBehaviour
     public float rango_vision;
     public float rango_ataque;
     public bool isStunned = false;
-    public GameObject rango;
-    public GameObject Hit; // El collider del arma
+    public GameObject Hit; // El collider del arma del enemigo
     public int damage = 1;
     public bool puedeHacerDano = true;
+
+    [Header("Configuración Cooldown")]
+    // Modificado de 3f a 0.8f
+    public float tiempoEntreAtaques = 0.8f;
+    private float proximoAtaque = 0f;    // Marca de tiempo para el siguiente ataque
 
     void Start()
     {
@@ -32,11 +36,8 @@ public class Skeleton : MonoBehaviour
 
     void Update()
     {
-        // Si está aturdido, no procesa movimiento ni ataques
-        if (isStunned)
-        {
-            return;
-        }
+        // Si está aturdido (por tu espada), no hace NADA
+        if (isStunned) return;
 
         Comportamientos();
     }
@@ -45,30 +46,18 @@ public class Skeleton : MonoBehaviour
     {
         float distancia = Mathf.Abs(transform.position.x - target.transform.position.x);
 
-        // PATRULLA
+        // --- LÓGICA DE PATRULLA ---
         if (distancia > rango_vision && !atacando)
         {
             ani.SetBool("AtackS", false);
             ani.SetBool("WalkS", false);
-            ani.SetBool("ParryedS", false);
 
             cronometro += Time.deltaTime;
-
-            if (cronometro >= 4)
-            {
-                rutina = Random.Range(0, 2);
-                cronometro = 0;
-            }
-
+            if (cronometro >= 4) { rutina = Random.Range(0, 2); cronometro = 0; }
             switch (rutina)
             {
-                case 0:
-                    ani.SetBool("WalkS", false);
-                    break;
-                case 1:
-                    direccion = Random.Range(0, 2);
-                    rutina = 2;
-                    break;
+                case 0: ani.SetBool("WalkS", false); break;
+                case 1: direccion = Random.Range(0, 2); rutina = 2; break;
                 case 2:
                     ani.SetBool("WalkS", true);
                     transform.rotation = Quaternion.Euler(0, (direccion == 0) ? 0 : 180, 0);
@@ -78,12 +67,11 @@ public class Skeleton : MonoBehaviour
         }
         else
         {
-            // PERSEGUIR
+            // --- LÓGICA DE PERSEGUIR ---
             if (distancia > rango_ataque && !atacando)
             {
                 ani.SetBool("WalkS", true);
                 ani.SetBool("AtackS", false);
-                ani.SetBool("ParryedS", false);
 
                 if (transform.position.x < target.transform.position.x)
                     transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -92,78 +80,78 @@ public class Skeleton : MonoBehaviour
 
                 transform.Translate(Vector3.right * speed_run * Time.deltaTime);
             }
-            // ATACAR
+            // --- LÓGICA DE ATACAR (Con espera de 0.8 segundos) ---
             else if (!atacando)
             {
-                atacando = true;
-                ani.SetBool("WalkS", false);
-                ani.SetBool("AtackS", true);
-                ani.SetBool("ParryedS", false);
+                // Solo ataca si ya pasó el tiempo de espera (0.8s)
+                if (Time.time >= proximoAtaque)
+                {
+                    atacando = true;
+                    ani.SetBool("WalkS", false);
+                    ani.SetBool("AtackS", true);
+                    proximoAtaque = Time.time + tiempoEntreAtaques; // Usa la variable pública (0.8f)
+                }
+                else
+                {
+                    ani.SetBool("AtackS", false);
+                    ani.SetBool("WalkS", false); // Se queda quieto esperando el cooldown
+                }
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // EL ENEMIGO HACE DAÑO AL PLAYER
-        // Corregido: usamos == para comparar, y revisamos que no esté aturdido
-        if (collision.CompareTag("Player") && puedeHacerDano == true && isStunned == false)
+        // 1. EL ENEMIGO GOLPEA AL PLAYER (Solo si el enemigo NO está aturdido)
+        if (collision.CompareTag("Player") && puedeHacerDano && !isStunned)
         {
             Player player = collision.GetComponent<Player>();
-            if (player != null)
-            {
-                player.Damage(transform.position, damage);
-            }
+            if (player != null) player.Damage(transform.position, damage);
         }
 
-        // EL PLAYER GOLPEA AL ENEMIGO CON LA ESPADA
+        // 2. CHOQUE DE ESPADAS (Parry)
         if (collision.CompareTag("Sword"))
         {
-            Stop(); // Llama a la parálisis
+            // Si el collider del arma del enemigo está encendido, es un choque de ataques
+            if (Hit.GetComponent<BoxCollider2D>().enabled == true)
+            {
+                StopEnemyStun(); // El enemigo se para 1 segundo
+            }
         }
     }
 
-    public void Stop()
+    // Funcion que inicia la corrutina de parálisis/stun
+    public void StopEnemyStun()
     {
-        // Detenemos cualquier parálisis previa para que el tiempo se reinicie si le sigues pegando
-        StopAllCoroutines();
+        StopAllCoroutines(); // Detiene cualquier stun anterior
         StartCoroutine(PausarEnemigo());
     }
 
+    // Corrutina para pausar al enemigo 1 segundo
     IEnumerator PausarEnemigo()
     {
         isStunned = true;
         puedeHacerDano = false;
         atacando = false;
-
-        // Desactivamos su arma inmediatamente para que no te dañe parado
         if (Hit != null) Hit.GetComponent<BoxCollider2D>().enabled = false;
 
-        // Activamos animación de parálisis y apagamos las demás
         ani.SetBool("WalkS", false);
         ani.SetBool("AtackS", false);
         ani.SetBool("ParryedS", true);
 
-        Debug.Log("Enemigo aturdido por 1 segundo");
+        yield return new WaitForSeconds(1f); // Espera 1 segundo (el stun por parry sigue siendo 1s)
 
-        yield return new WaitForSeconds(1f); // Espera el segundo
-
-        // Volver a la normalidad
         isStunned = false;
         puedeHacerDano = true;
         ani.SetBool("ParryedS", false);
-        Debug.Log("Enemigo recuperado");
     }
 
-    // EVENTOS DE ANIMACIÓN
+    // EVENTOS DE ANIMACIÓN (Llamados desde la animación de ataque)
     public void Final_Ani()
     {
-        // Solo resetear ataque si no ha sido interrumpido por un stun
-        if (!isStunned)
-        {
-            ani.SetBool("AtackS", false);
-            atacando = false;
-        }
+        // Al terminar la animación de ataque, permitimos que vuelva a moverse
+        atacando = false;
+        ani.SetBool("AtackS", false);
     }
 
     public void ColliderWeaponTrue()
