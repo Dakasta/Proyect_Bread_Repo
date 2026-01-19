@@ -1,8 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BalaEnemigo : MonoBehaviour
 {
     public float speed = 8f;
+    public int damage = 1;
+
     private Rigidbody2D rb;
     private Transform cubeTarget;
 
@@ -14,7 +16,6 @@ public class BalaEnemigo : MonoBehaviour
     public void SetDirection(Vector2 direction)
     {
         rb.linearVelocity = direction.normalized * speed;
-
         Destroy(gameObject, 4f);
     }
 
@@ -23,27 +24,25 @@ public class BalaEnemigo : MonoBehaviour
         cubeTarget = target;
     }
 
-
-    public int damage = 1;
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-
+        // 🔴 GOLPEA AL PLAYER
         if (collision.CompareTag("Player"))
         {
+            Player player = collision.GetComponent<Player>();
 
-            Vector2 direction = (collision.transform.position - transform.position);
-            collision.GetComponent<PlayerHealth>().TakeDamage(damage, direction);
+            if (player != null)
+            {
+                Vector2 direccion = transform.position;
+                player.Damage(direccion, damage);
+            }
+
             Destroy(gameObject);
         }
 
-        if (collision.CompareTag("enemigo"))
-        {
-            Destroy(gameObject);
-        }
-        // Si la espada golpea la bola
+       
+
+        // 🟢 REBOTAR CON LA ESPADA
         if (collision.CompareTag("Sword"))
         {
             if (cubeTarget != null)
@@ -52,13 +51,7 @@ public class BalaEnemigo : MonoBehaviour
                     (cubeTarget.position - transform.position).normalized;
 
                 SetDirection(directionToCube);
-
-                Destroy(gameObject, 5f);
-
-
             }
-           
-
         }
     }
 }

@@ -11,7 +11,9 @@ public class Player : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
     [SerializeField] bool isFacingRight;
-
+    [SerializeField] bool Dano;
+    [SerializeField] int Vida = 3;
+    [SerializeField] bool muelto = false;
     [Header("GroundCheck Configuration")]
     [SerializeField] bool isGrounded;
     [SerializeField] Transform groundCheck;
@@ -95,6 +97,42 @@ public class Player : MonoBehaviour
     {
         StartCoroutine(AttackCoroutine());
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("EnemyAttack"))
+        {
+            Vector2 direccion = collision.transform.position;
+            Damage(direccion, 1);
+        }
+    }
+    public void Damage(Vector2 direccion, int cantDano)
+    {
+
+        Debug.Log("Vida actual: " + Vida);
+        if (!Dano)
+        {
+            Dano = true;
+            Vida -= cantDano;
+            Vector2 rebote = new Vector2(transform.position.x - direccion.x, 1).normalized;
+        rb.AddForce(rebote, ForceMode2D.Impulse);
+        }
+
+        if(Vida <= 0)
+        {
+
+            muelto = true;
+            Respawn();
+        }
+        StartCoroutine(Invulnerabilidad());
+    }
+    IEnumerator Invulnerabilidad()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Dano = false;
+    }
+
+
+
 
     public void Respawn()
     {

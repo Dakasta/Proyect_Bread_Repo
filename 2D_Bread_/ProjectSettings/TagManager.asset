@@ -11,6 +11,7 @@ TagManager:
   - Torreta1
   - fire
   - respawnPoint
+  - EnemmyAtack
   layers:
   - Default
   - TransparentFX

@@ -8,6 +8,7 @@ public class BalaEnemigo2 : MonoBehaviour
     private Transform cubeTarget;
     public Transform Torreta;
     public Boolean Parry = false;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -62,13 +63,16 @@ public class BalaEnemigo2 : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-
         if (collision.CompareTag("Player"))
         {
+            Player player = collision.GetComponent<Player>();
 
+            if (player != null)
+            {
+                Vector2 direccion = transform.position;
+                player.Damage(direccion, damage);
+            }
 
-            Vector2 direction = (collision.transform.position - transform.position);
-            collision.GetComponent<PlayerHealth>().TakeDamage(damage, direction);
             Destroy(gameObject);
         }
 

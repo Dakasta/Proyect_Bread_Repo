@@ -1,16 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D coll)
     {
-        if (collision.CompareTag("Player"))
+        if (coll.CompareTag("Player"))
         {
 
             print("Daño");
 
         }
     }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
