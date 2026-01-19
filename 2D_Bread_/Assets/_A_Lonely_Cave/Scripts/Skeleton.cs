@@ -43,6 +43,7 @@ public class Skeleton : MonoBehaviour
         {
             ani.SetBool("AtackS", false);
             ani.SetBool("WalkS", false);
+            ani.SetBool("ParryedS", false);
 
             cronometro += Time.deltaTime;
 
@@ -88,6 +89,8 @@ public class Skeleton : MonoBehaviour
             {
                 ani.SetBool("WalkS", true);
                 ani.SetBool("AtackS", false);
+                ani.SetBool("ParryedS", false);
+
 
                 if (transform.position.x < target.transform.position.x)
                 {
@@ -108,6 +111,8 @@ public class Skeleton : MonoBehaviour
                     atacando = true;
                     ani.SetBool("WalkS", false);
                     ani.SetBool("AtackS", true);
+                    ani.SetBool("ParryedS", false);
+
 
 
                 }
@@ -129,6 +134,11 @@ public class Skeleton : MonoBehaviour
             }
 
           
+        }
+
+        if (collision.CompareTag("Sword"))
+        {
+            ani.SetBool("ParryedS", true);
         }
     }
 
