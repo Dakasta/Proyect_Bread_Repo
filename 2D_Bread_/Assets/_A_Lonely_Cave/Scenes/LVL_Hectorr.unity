@@ -302,10 +302,11 @@ GameObject:
   - component: {fileID: 852506877}
   - component: {fileID: 852506879}
   - component: {fileID: 852506880}
-  - component: {fileID: 852506881}
   - component: {fileID: 852506882}
+  - component: {fileID: 852506883}
+  - component: {fileID: 852506884}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Skeletton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -418,7 +419,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.013087273, y: 0}
+  m_Offset: {x: -0.013087273, y: 0.031591892}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -428,7 +429,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.4503355, y: 1}
+  m_Size: {x: 0.4503355, y: 0.9368162}
   m_EdgeRadius: 0
 --- !u!50 &852506880
 Rigidbody2D:
@@ -456,22 +457,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &852506881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 852506876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1df2ccdf60c3a64e96584bea20422dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BasicEnemy
-  player: {fileID: 1334304409}
-  detectionRadius: 5
-  speed: 6
+  m_Constraints: 4
 --- !u!95 &852506882
 Animator:
   serializedVersion: 7
@@ -494,6 +480,42 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!111 &852506883
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852506876}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
+--- !u!114 &852506884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852506876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e12f954678dd3e468d8bd6b1a790fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Skeleton
+  rutina: 0
+  cronometro: 0
+  ani: {fileID: 852506882}
+  direccion: 0
+  speed_walk: 1.5
+  speed_run: 5
+  target: {fileID: 8469411165337713804}
+  atacando: 0
 --- !u!4 &938364383 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4677845528798461249, guid: e27929307b459ad438de7ae0dbed69a7, type: 3}
@@ -1436,11 +1458,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1334304409 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3983646141560371529, guid: b7b9d91f5d5174549a060617008c3d35, type: 3}
-  m_PrefabInstance: {fileID: 8469411165337713803}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1354792669 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6890322647403511098, guid: d1c6285bf68acc6468cf76409fac27e0, type: 3}
