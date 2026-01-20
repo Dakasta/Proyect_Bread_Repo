@@ -1,9 +1,10 @@
-﻿using NUnit.Framework.Internal.Execution;
+﻿
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
+// Se eliminó NUnit para evitar errores en el Build
 public class Player : MonoBehaviour
 {
     [SerializeField] public GameObject sword;
@@ -13,7 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
     [SerializeField] bool isFacingRight;
-   
+
     [SerializeField] int Vida = 3;
     [SerializeField] bool muelto = false;
     [Header("GroundCheck Configuration")]
@@ -28,13 +29,14 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     Vector2 moveInput;
     Vector2 attackDirection;
+    public bool atak = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         isFacingRight = true;
         sword.GetComponent<BoxCollider2D>().enabled = false;
-       sword.SetActive(false);
+        sword.SetActive(false);
     }
 
     void Update()
@@ -85,7 +87,9 @@ public class Player : MonoBehaviour
         }
         else if (attackDirection.x < 0) // Izquierda
         {
-            swordPosition = new Vector3(0.6f, 0.2f, 0); 
+            // Corregido: Ahora la espada sale a la izquierda (-0.6f)
+            swordPosition = new Vector3(+0.6f, 0.2f, 0);
+            //swordRotation = Quaternion.Euler(0, 0, 180);
         }
 
         sword.transform.localPosition = swordPosition;
@@ -93,56 +97,62 @@ public class Player : MonoBehaviour
         sword.SetActive(true);
 
         yield return new WaitForSeconds(attackDuration);
+
         sword.GetComponent<BoxCollider2D>().enabled = false;
         sword.SetActive(false);
     }
 
     void Attack()
     {
+      
+        StartCoroutine(DesactivarAtaque(0.3f));
         StartCoroutine(AttackCoroutine());
+        atak = true;
     }
+
+    IEnumerator DesactivarAtaque(float tiempo)
+    {
+        yield return new WaitForSeconds(tiempo);
+        atak = false;
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        
         if (collision.CompareTag("EnemmyAtack"))
         {
-
-            Vida -= 1;
-            Vector2 direccion = collision.transform.position;
-           
-            Debug.Log("Vida actual: " + Vida);
+            if (!atak)
+            {
+                Vida -= 1;
+                Debug.Log("Vida actual: " + Vida);
+            }
+            else
+            {
+                Debug.Log("MI BOMBOOOOO ");
+            }
         }
 
-        if(Vida <= 0)
+        if (Vida <= 0)
         {
-
             muelto = true;
             if (muelto == true)
             {
-
                 Respawn();
                 //muelto = false;
             }
         }
     }
-    
+
     IEnumerator Invulnerabilidad()
     {
         yield return new WaitForSeconds(0.5f);
-      
     }
-
-
-
 
     public void Respawn()
     {
+      
         SceneManager.LoadScene("LVL_Hectorr");
-        transform.position = respawnPoint.position;
 
-        rb.linearVelocity = Vector2.zero;
-        rb.angularVelocity = 0f;
+       
     }
 
     void Movement()

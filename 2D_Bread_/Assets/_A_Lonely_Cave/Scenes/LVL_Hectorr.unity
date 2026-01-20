@@ -1693,7 +1693,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7983289509211169496, guid: d1811e552b7c9f34aaf01cc7dee27d89, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8966175975694751927, guid: d1811e552b7c9f34aaf01cc7dee27d89, type: 3}
       propertyPath: topPoint
