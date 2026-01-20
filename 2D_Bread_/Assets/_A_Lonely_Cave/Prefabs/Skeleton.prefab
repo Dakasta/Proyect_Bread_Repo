@@ -102,8 +102,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4138434643132703451}
-  - component: {fileID: 3046627384934476903}
   - component: {fileID: 5566033101523331163}
+  - component: {fileID: 3046627384934476903}
   m_Layer: 0
   m_Name: Hit
   m_TagString: EnemmyAtack
@@ -126,18 +126,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5199142459777446450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3046627384934476903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4136458986836601273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3bd093375747c04ca6306b5bee54a15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitEnemigo2D
 --- !u!61 &5566033101523331163
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -184,6 +172,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.55085135, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3046627384934476903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4136458986836601273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3bd093375747c04ca6306b5bee54a15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitEnemigo2D
 --- !u!1 &4839290231934640933
 GameObject:
   m_ObjectHideFlags: 0

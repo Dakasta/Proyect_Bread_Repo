@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,14 +28,14 @@ public class Skeleton : MonoBehaviour
     public float tiempoEntreAtaques = 0f;
     private float proximoAtaque = 0f;    // Marca de tiempo para el siguiente ataque
 
-    private int vida = 2;
-    private int totalvida = 2;
+    private float vida = 2;
+   
 
     void Start()
     {
         ani = GetComponent<Animator>();
         target = GameObject.Find("Player");
-        if (Hit != null) Hit.GetComponent<BoxCollider2D>().enabled = false;
+        
     }
 
     void Update()
@@ -56,11 +57,11 @@ public class Skeleton : MonoBehaviour
             ani.SetBool("WalkS", false);
 
             cronometro += Time.deltaTime;
-            if (cronometro >= 4) { rutina = Random.Range(0, 2); cronometro = 0; }
+            if (cronometro >= 4) { rutina = 1; cronometro = 0; }
             switch (rutina)
             {
                 case 0: ani.SetBool("WalkS", false); break;
-                case 1: direccion = Random.Range(0, 2); rutina = 2; break;
+                //case 1: direccion = Random.Range(0, 2); rutina = 2; break;
                 case 2:
                     ani.SetBool("WalkS", true);
                     transform.rotation = Quaternion.Euler(0, (direccion == 0) ? 0 : 180, 0);
@@ -106,18 +107,18 @@ public class Skeleton : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 1. EL ENEMIGO GOLPEA AL PLAYER (Solo si el enemigo NO está aturdido)
-        if (collision.CompareTag("Player") && puedeHacerDano && !isStunned)
-        {
-            Player player = collision.GetComponent<Player>();
-            if (player != null) player.Damage(transform.position, damage);
-        }
+       // if (collision.CompareTag("Player") && puedeHacerDano && !isStunned)
+        //{
+       //     Player player = collision.GetComponent<Player>();
+        //    if (player != null) player.Damage(transform.position, damage);
+       // }
 
         // 2. CHOQUE DE ESPADAS (Parry)
         if (collision.CompareTag("Sword"))
         {
 
-             vida = vida -1;
-
+             vida --;
+            Debug.Log( vida);
             if ( vida <= 0)
             {
 

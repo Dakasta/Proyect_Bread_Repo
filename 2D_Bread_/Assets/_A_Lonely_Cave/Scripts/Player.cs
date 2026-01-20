@@ -1,17 +1,18 @@
-﻿using System.Collections;
+﻿using NUnit.Framework.Internal.Execution;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameObject sword;
+    [SerializeField] public GameObject sword;
     [SerializeField] private float attackDuration = 0.2f;
 
     [Header("Player Stats")]
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
     [SerializeField] bool isFacingRight;
-    [SerializeField] bool Dano;
+   
     [SerializeField] int Vida = 3;
     [SerializeField] bool muelto = false;
     [Header("GroundCheck Configuration")]
@@ -31,7 +32,8 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         isFacingRight = true;
-        sword.SetActive(false);
+        sword.GetComponent<BoxCollider2D>().enabled = false;
+       sword.SetActive(false);
     }
 
     void Update()
@@ -86,10 +88,11 @@ public class Player : MonoBehaviour
         }
 
         sword.transform.localPosition = swordPosition;
+        sword.GetComponent<BoxCollider2D>().enabled = true;
         sword.SetActive(true);
 
         yield return new WaitForSeconds(attackDuration);
-
+        sword.GetComponent<BoxCollider2D>().enabled = false;
         sword.SetActive(false);
     }
 
@@ -97,38 +100,36 @@ public class Player : MonoBehaviour
     {
         StartCoroutine(AttackCoroutine());
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
+        
+        
         if (collision.CompareTag("EnemmyAtack"))
         {
-            Vector2 direccion = collision.transform.position;
-            Damage(direccion, 1);
-        }
-    }
-    public void Damage(Vector2 direccion, int cantDano)
-    {
 
-        Debug.Log("Vida actual: " + Vida);
-        if (!Dano)
-        {
-            Dano = true;
-            Vida -= cantDano;
-            Vector2 rebote = new Vector2(transform.position.x - direccion.x, 1).normalized;
-        rb.AddForce(rebote, ForceMode2D.Impulse);
+            Vida -= 1;
+            Vector2 direccion = collision.transform.position;
+           
+            Debug.Log("Vida actual: " + Vida);
         }
 
         if(Vida <= 0)
         {
 
             muelto = true;
-            Respawn();
+            if (muelto == true)
+            {
+
+                Respawn();
+                muelto = false;
+            }
         }
-        StartCoroutine(Invulnerabilidad());
     }
+    
     IEnumerator Invulnerabilidad()
     {
         yield return new WaitForSeconds(0.5f);
-        Dano = false;
+      
     }
 
 

@@ -32,9 +32,9 @@ AnimationClip:
       value: {fileID: 8531409349479520881, guid: b4e8b4618de39a34f9bc38ce11e0e750, type: 3}
     - time: 0.36666667
       value: {fileID: -7629253095265839450, guid: b4e8b4618de39a34f9bc38ce11e0e750, type: 3}
-    - time: 0.45
+    - time: 0.73333335
       value: {fileID: -1034663133617218296, guid: b4e8b4618de39a34f9bc38ce11e0e750, type: 3}
-    - time: 0.5
+    - time: 0.78333336
       value: {fileID: -1034663133617218296, guid: b4e8b4618de39a34f9bc38ce11e0e750, type: 3}
     attribute: m_Sprite
     path: 
@@ -71,7 +71,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.51666665
+    m_StopTime: 0.8
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -98,21 +98,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.45
+  - time: 0.73333335
     functionName: ColliderWeaponFalse
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.45
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5
+  - time: 0.8
     functionName: Final_Ani
     data: 
     objectReferenceParameter: {fileID: 0}
