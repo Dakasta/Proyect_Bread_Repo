@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework.Internal.Execution;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
@@ -121,7 +122,7 @@ public class Player : MonoBehaviour
             {
 
                 Respawn();
-                muelto = false;
+                //muelto = false;
             }
         }
     }
@@ -137,6 +138,7 @@ public class Player : MonoBehaviour
 
     public void Respawn()
     {
+        SceneManager.LoadScene("LVL_Hectorr");
         transform.position = respawnPoint.position;
 
         rb.linearVelocity = Vector2.zero;

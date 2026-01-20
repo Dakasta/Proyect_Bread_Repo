@@ -62,10 +62,10 @@ public class Skeleton : MonoBehaviour
             {
                 case 0: ani.SetBool("WalkS", false); break;
                 //case 1: direccion = Random.Range(0, 2); rutina = 2; break;
-                case 2:
-                    ani.SetBool("WalkS", true);
-                    transform.rotation = Quaternion.Euler(0, (direccion == 0) ? 0 : 180, 0);
-                    transform.Translate(Vector3.right * speed_walk * Time.deltaTime);
+                //case 2:
+                   // ani.SetBool("WalkS", true);
+                    //transform.rotation = Quaternion.Euler(0, (direccion == 0) ? 0 : 180, 0);
+                    //transform.Translate(Vector3.right * speed_walk * Time.deltaTime);
                     break;
             }
         }
