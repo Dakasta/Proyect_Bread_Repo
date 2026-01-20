@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("EnemyAttack"))
+        if (collision.CompareTag("EnemmyAtack"))
         {
             Vector2 direccion = collision.transform.position;
             Damage(direccion, 1);
