@@ -24,8 +24,11 @@ public class Skeleton : MonoBehaviour
 
     [Header("Configuración Cooldown")]
     // Modificado de 3f a 0.8f
-    public float tiempoEntreAtaques = 0.8f;
+    public float tiempoEntreAtaques = 0f;
     private float proximoAtaque = 0f;    // Marca de tiempo para el siguiente ataque
+
+    private int vida = 2;
+    private int totalvida = 2;
 
     void Start()
     {
@@ -112,6 +115,14 @@ public class Skeleton : MonoBehaviour
         // 2. CHOQUE DE ESPADAS (Parry)
         if (collision.CompareTag("Sword"))
         {
+
+             vida = vida -1;
+
+            if ( vida <= 0)
+            {
+
+                Destroy(gameObject);
+            }
             // Si el collider del arma del enemigo está encendido, es un choque de ataques
             if (Hit.GetComponent<BoxCollider2D>().enabled == true)
             {

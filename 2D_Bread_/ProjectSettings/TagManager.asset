@@ -12,6 +12,7 @@ TagManager:
   - fire
   - respawnPoint
   - EnemmyAtack
+  - Skeleton
   layers:
   - Default
   - TransparentFX

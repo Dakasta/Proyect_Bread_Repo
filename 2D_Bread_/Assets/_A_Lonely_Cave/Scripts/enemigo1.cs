@@ -6,6 +6,8 @@ public class enemigo1 : MonoBehaviour
     public float shootInterval = 1.5f;
     public Transform firePoint;
     private Rigidbody2D rb;
+
+    private int vida = 1;
     void Start()
     {
         InvokeRepeating(nameof(Shoot), 1f, shootInterval);
@@ -16,9 +18,13 @@ public class enemigo1 : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.CompareTag("Bala"))
+        if (collision.CompareTag("EnemmyAtack"))
         {
+            vida = vida - 1;
+
+            if (vida <= 0) { 
             Destroy(gameObject);
+            }
         }
 
     }

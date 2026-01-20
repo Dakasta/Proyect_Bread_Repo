@@ -11,13 +11,13 @@ public class Torreta1 : MonoBehaviour
 
     private Vector3 targetPosition;
 
-
+    public GameObject puertaBloqueada;
 
     public GameObject ProjectilePrefab;
     public float shootInterval = 1.5f;
     public Transform firePoint;
     private Rigidbody2D rb;
-
+    private int vida = 1;
 
 
 
@@ -44,6 +44,8 @@ public class Torreta1 : MonoBehaviour
         projectile.SetDirection(direction);
 
     }
+
+
     void Update()
     {
         Move();
@@ -68,10 +70,23 @@ public class Torreta1 : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.CompareTag("Bala"))
+        if (collision.CompareTag("EnemmyAtack"))
         {
-            Destroy(gameObject);
+            vida = vida - 1;
+
+            if (vida <= 0)
+            {
+
+                if (puertaBloqueada != null)
+                {
+                    Destroy(puertaBloqueada); // Destruye la puerta
+                }
+
+
+                Destroy(gameObject);
+            }
         }
+
 
     }
 
