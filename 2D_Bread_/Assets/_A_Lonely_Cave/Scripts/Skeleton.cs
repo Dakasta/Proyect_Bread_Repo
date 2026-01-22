@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,27 +22,23 @@ public class Skeleton : MonoBehaviour
     public GameObject Hit; // El collider del arma del enemigo
     public int damage = 1;
     public bool puedeHacerDano = true;
+    private bool puedeRecibirDano = true;
 
     [Header("Configuración Cooldown")]
-    // Modificado de 3f a 0.8f
     public float tiempoEntreAtaques = 0f;
-    private float proximoAtaque = 0f;    // Marca de tiempo para el siguiente ataque
+    private float proximoAtaque = 0f;
 
-    private int vida = 2;
-    private int totalvida = 2;
+    private float vida = 2;
 
     void Start()
     {
         ani = GetComponent<Animator>();
         target = GameObject.Find("Player");
-        if (Hit != null) Hit.GetComponent<BoxCollider2D>().enabled = false;
     }
 
     void Update()
     {
-        // Si está aturdido (por tu espada), no hace NADA
         if (isStunned) return;
-
         Comportamientos();
     }
 
@@ -49,28 +46,20 @@ public class Skeleton : MonoBehaviour
     {
         float distancia = Mathf.Abs(transform.position.x - target.transform.position.x);
 
-        // --- LÓGICA DE PATRULLA ---
         if (distancia > rango_vision && !atacando)
         {
             ani.SetBool("AtackS", false);
             ani.SetBool("WalkS", false);
 
             cronometro += Time.deltaTime;
-            if (cronometro >= 4) { rutina = Random.Range(0, 2); cronometro = 0; }
+            if (cronometro >= 4) { rutina = 1; cronometro = 0; }
             switch (rutina)
             {
                 case 0: ani.SetBool("WalkS", false); break;
-                case 1: direccion = Random.Range(0, 2); rutina = 2; break;
-                case 2:
-                    ani.SetBool("WalkS", true);
-                    transform.rotation = Quaternion.Euler(0, (direccion == 0) ? 0 : 180, 0);
-                    transform.Translate(Vector3.right * speed_walk * Time.deltaTime);
-                    break;
             }
         }
         else
         {
-            // --- LÓGICA DE PERSEGUIR ---
             if (distancia > rango_ataque && !atacando)
             {
                 ani.SetBool("WalkS", true);
@@ -83,21 +72,19 @@ public class Skeleton : MonoBehaviour
 
                 transform.Translate(Vector3.right * speed_run * Time.deltaTime);
             }
-            // --- LÓGICA DE ATACAR (Con espera de 0.8 segundos) ---
             else if (!atacando)
             {
-                // Solo ataca si ya pasó el tiempo de espera (0.8s)
                 if (Time.time >= proximoAtaque)
                 {
                     atacando = true;
                     ani.SetBool("WalkS", false);
                     ani.SetBool("AtackS", true);
-                    proximoAtaque = Time.time + tiempoEntreAtaques; // Usa la variable pública (0.8f)
+                    proximoAtaque = Time.time + tiempoEntreAtaques;
                 }
                 else
                 {
                     ani.SetBool("AtackS", false);
-                    ani.SetBool("WalkS", false); // Se queda quieto esperando el cooldown
+                    ani.SetBool("WalkS", false);
                 }
             }
         }
@@ -105,69 +92,72 @@ public class Skeleton : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 1. EL ENEMIGO GOLPEA AL PLAYER (Solo si el enemigo NO está aturdido)
-        if (collision.CompareTag("Player") && puedeHacerDano && !isStunned)
-        {
-            Player player = collision.GetComponent<Player>();
-            if (player != null) player.Damage(transform.position, damage);
-        }
-
-        // 2. CHOQUE DE ESPADAS (Parry)
         if (collision.CompareTag("Sword"))
         {
-
-             vida = vida -1;
-
-            if ( vida <= 0)
+            // 1. LÓGICA DE DAÑO (Exacta: 2 golpes)
+            if (puedeRecibirDano)
             {
+                vida--;
+                Debug.Log("Vida esqueleto: " + vida);
 
-                Destroy(gameObject);
+                if (vida <= 0)
+                {
+                    Destroy(gameObject);
+                    return;
+                }
+                StartCoroutine(CooldownDano());
             }
-            // Si el collider del arma del enemigo está encendido, es un choque de ataques
-            if (Hit.GetComponent<BoxCollider2D>().enabled == true)
+
+            // 2. LÓGICA DE PARRY (Choque de armas)
+            // Se activa solo si el arma del enemigo está encendida (está atacando)
+            if (Hit != null && Hit.GetComponent<BoxCollider2D>().enabled)
             {
-                StopEnemyStun(); // El enemigo se para 1 segundo
+                StopEnemyStun();
             }
         }
     }
 
-    // Funcion que inicia la corrutina de parálisis/stun
+    IEnumerator CooldownDano()
+    {
+        puedeRecibirDano = false;
+        // 0.25s es el tiempo ideal para evitar el multi-click pero permitir combos
+        yield return new WaitForSeconds(0.25f);
+        puedeRecibirDano = true;
+    }
+
     public void StopEnemyStun()
     {
-        StopAllCoroutines(); // Detiene cualquier stun anterior
+        // Importante: No usamos StopAllCoroutines para no cancelar el CooldownDano
         StartCoroutine(PausarEnemigo());
     }
 
-    // Corrutina para pausar al enemigo 1 segundo
     IEnumerator PausarEnemigo()
     {
         isStunned = true;
         puedeHacerDano = false;
         atacando = false;
+
         if (Hit != null) Hit.GetComponent<BoxCollider2D>().enabled = false;
 
         ani.SetBool("WalkS", false);
         ani.SetBool("AtackS", false);
         ani.SetBool("ParryedS", true);
 
-        yield return new WaitForSeconds(1f); // Espera 1 segundo (el stun por parry sigue siendo 1s)
+        yield return new WaitForSeconds(1f);
 
         isStunned = false;
         puedeHacerDano = true;
         ani.SetBool("ParryedS", false);
     }
 
-    // EVENTOS DE ANIMACIÓN (Llamados desde la animación de ataque)
     public void Final_Ani()
     {
-        // Al terminar la animación de ataque, permitimos que vuelva a moverse
         atacando = false;
         ani.SetBool("AtackS", false);
     }
 
     public void ColliderWeaponTrue()
     {
-        // Solo encender el arma si el enemigo no está en medio de un stun
         if (!isStunned && Hit != null)
             Hit.GetComponent<BoxCollider2D>().enabled = true;
     }

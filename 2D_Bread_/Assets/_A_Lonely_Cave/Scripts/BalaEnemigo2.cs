@@ -70,7 +70,7 @@ public class BalaEnemigo2 : MonoBehaviour
             if (player != null)
             {
                 Vector2 direccion = transform.position;
-                player.Damage(direccion, damage);
+              
             }
 
             Destroy(gameObject);

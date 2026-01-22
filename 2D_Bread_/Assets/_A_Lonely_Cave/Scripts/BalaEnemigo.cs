@@ -34,7 +34,7 @@ public class BalaEnemigo : MonoBehaviour
             if (player != null)
             {
                 Vector2 direccion = transform.position;
-                player.Damage(direccion, damage);
+               
             }
 
             Destroy(gameObject);

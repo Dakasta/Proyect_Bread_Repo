@@ -1,17 +1,20 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
+// Se eliminó NUnit para evitar errores en el Build
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameObject sword;
+    [SerializeField] public GameObject sword;
     [SerializeField] private float attackDuration = 0.2f;
 
     [Header("Player Stats")]
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
     [SerializeField] bool isFacingRight;
-    [SerializeField] bool Dano;
+
     [SerializeField] int Vida = 3;
     [SerializeField] bool muelto = false;
     [Header("GroundCheck Configuration")]
@@ -26,11 +29,13 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     Vector2 moveInput;
     Vector2 attackDirection;
+    public bool atak = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         isFacingRight = true;
+        sword.GetComponent<BoxCollider2D>().enabled = false;
         sword.SetActive(false);
     }
 
@@ -82,64 +87,72 @@ public class Player : MonoBehaviour
         }
         else if (attackDirection.x < 0) // Izquierda
         {
-            swordPosition = new Vector3(0.6f, 0.2f, 0); 
+            // Corregido: Ahora la espada sale a la izquierda (-0.6f)
+            swordPosition = new Vector3(+0.6f, 0.2f, 0);
+            //swordRotation = Quaternion.Euler(0, 0, 180);
         }
 
         sword.transform.localPosition = swordPosition;
+        sword.GetComponent<BoxCollider2D>().enabled = true;
         sword.SetActive(true);
 
         yield return new WaitForSeconds(attackDuration);
 
+        sword.GetComponent<BoxCollider2D>().enabled = false;
         sword.SetActive(false);
     }
 
     void Attack()
     {
+      
+        StartCoroutine(DesactivarAtaque(0.3f));
         StartCoroutine(AttackCoroutine());
+        atak = true;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    IEnumerator DesactivarAtaque(float tiempo)
+    {
+        yield return new WaitForSeconds(tiempo);
+        atak = false;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("EnemmyAtack"))
         {
-            Vector2 direccion = collision.transform.position;
-            Damage(direccion, 1);
-        }
-    }
-    public void Damage(Vector2 direccion, int cantDano)
-    {
-
-        Debug.Log("Vida actual: " + Vida);
-        if (!Dano)
-        {
-            Dano = true;
-            Vida -= cantDano;
-            Vector2 rebote = new Vector2(transform.position.x - direccion.x, 1).normalized;
-        rb.AddForce(rebote, ForceMode2D.Impulse);
+            if (!atak)
+            {
+                Vida -= 1;
+                Debug.Log("Vida actual: " + Vida);
+            }
+            else
+            {
+                Debug.Log("MI BOMBOOOOO ");
+            }
         }
 
-        if(Vida <= 0)
+        if (Vida <= 0)
         {
-
             muelto = true;
-            Respawn();
+            if (muelto == true)
+            {
+                Respawn();
+                //muelto = false;
+            }
         }
-        StartCoroutine(Invulnerabilidad());
     }
+
     IEnumerator Invulnerabilidad()
     {
         yield return new WaitForSeconds(0.5f);
-        Dano = false;
     }
-
-
-
 
     public void Respawn()
     {
-        transform.position = respawnPoint.position;
+      
+        SceneManager.LoadScene("LVL_Hectorr");
 
-        rb.linearVelocity = Vector2.zero;
-        rb.angularVelocity = 0f;
+       
     }
 
     void Movement()

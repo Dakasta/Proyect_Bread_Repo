@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class HitEnemigo2D : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D coll)
+
+   
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (coll.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
 
             print("Daño");
