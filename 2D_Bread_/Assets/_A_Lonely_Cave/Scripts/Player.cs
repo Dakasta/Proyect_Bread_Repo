@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] bool isFacingRight;
 
-    [SerializeField] int Vida = 3;
+ 
     [SerializeField] bool muelto = false;
     [Header("GroundCheck Configuration")]
     [SerializeField] bool isGrounded;
@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     Vector2 attackDirection;
     public bool atak = false;
     public bool estaDasheando;
-
+    public float Vida = 3;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
