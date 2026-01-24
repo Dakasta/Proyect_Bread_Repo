@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d1c3651e12dbd5d4285ab6bcb4329043
+guid: 60f883b553ad67940a625c885b80f9ab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2504878440047138802
-    second: Correr 7-8_0
+      213: -8076735192162532682
+    second: Ataque_lateral-2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 34
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Correr 7-8_0
+      name: Ataque_lateral-2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 40
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 5
+        y: 2
+        width: 30
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2f75b887bad13c220800000000000000
-      internalID: 2504878440047138802
+      spriteID: 6b28146922ca9ef80800000000000000
+      internalID: -8076735192162532682
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e235ae66a8665774a826a9f419cc6972
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Correr 7-8_0: 2504878440047138802
+      Ataque_lateral-2_0: -8076735192162532682
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

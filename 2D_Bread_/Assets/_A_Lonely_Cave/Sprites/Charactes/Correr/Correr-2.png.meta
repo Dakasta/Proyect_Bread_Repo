@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 983531b36a45b7041873b04c80a3c489
+guid: a621e7c1e506d4e4c97b564b79c926e3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7416273208830857059
-    second: Correr 2-8_0
+      213: 2865292151832723247
+    second: Correr-2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Correr 2-8_0
+      name: Correr-2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 40
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 6
+        y: 3
+        width: 22
+        height: 35
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d90f3664fca141990800000000000000
-      internalID: -7416273208830857059
+      spriteID: f2f34b7f70093c720800000000000000
+      internalID: 2865292151832723247
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 0400a19f43ee4e048aff1ac375c62b0d
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Correr 2-8_0: -7416273208830857059
+      Correr-2_0: 2865292151832723247
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

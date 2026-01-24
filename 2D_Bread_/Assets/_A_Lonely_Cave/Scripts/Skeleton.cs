@@ -94,7 +94,7 @@ public class Skeleton : MonoBehaviour
     {
         if (collision.CompareTag("Sword"))
         {
-            // 1. LÓGICA DE DAÑO (Exacta: 2 golpes)
+            
             if (puedeRecibirDano)
             {
                 vida--;

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
@@ -23,19 +24,21 @@ public class Player : MonoBehaviour
 
     [Header("Respawn Configuration")]
     [SerializeField] Transform respawnPoint;
-
+    public Animator ani;
     Rigidbody2D rb;
     Vector2 moveInput;
     Vector2 attackDirection;
     public bool atak = false;
     public bool estaDasheando;
     public float Vida = 3;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         isFacingRight = true;
         sword.GetComponent<BoxCollider2D>().enabled = false;
         sword.SetActive(false);
+        
     }
 
     void Update()
@@ -55,13 +58,19 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // CAMBIO AQUÍ: Si Dash es true, hace return y no ejecuta Movement
+       
         if (Dash())
         {
             return;
         }
 
+        
         Movement();
+
+
+
+        
+        
     }
 
     // 🔹 Determina la dirección del ataque
@@ -110,15 +119,18 @@ public class Player : MonoBehaviour
 
     void Attack()
     {
+
+        
         StartCoroutine(DesactivarAtaque(0.3f));
         StartCoroutine(AttackCoroutine());
+       
         atak = true;
     }
-
+  
     IEnumerator DesactivarAtaque(float tiempo)
     {
         yield return new WaitForSeconds(tiempo);
-        atak = false;
+      
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -158,10 +170,13 @@ public class Player : MonoBehaviour
 
     void Movement()
     {
+        
         rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
+
+       
     }
 
-    // CAMBIO AQUÍ: Cambiado de 'void' a 'bool' para que el if de arriba funcione
+   
     private bool Dash()
     {
         if (estaDasheando)
