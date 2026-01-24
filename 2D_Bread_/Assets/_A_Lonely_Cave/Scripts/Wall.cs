@@ -33,8 +33,7 @@ public class Wall : MonoBehaviour
             puerta.SetActive(true);
             Boss.GetComponent<BoxCollider2D>().enabled = true;
             Boss.SetActive(true);
-            Debug.Log("MI BOMBOOOOO ");
-
+           
         }
     }
 }
