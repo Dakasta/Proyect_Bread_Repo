@@ -1,40 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
+// Script de Unity | 0 referencias
 public class CameraPlayer : MonoBehaviour
 {
-    public Transform target;
-    public float offsetX = 2f;      // Cuánto se adelanta
-    public float offsetY = 1f;
-    public float smoothSpeed = 0.15f;
+    public Transform objetivo;
+    public float velocidadCamara = 0.025f;
+    public Vector3 desplazamiento;
 
-    private float currentOffsetX;
-
-    void LateUpdate()
+    // Mensaje de Unity | 0 referencias
+    private void LateUpdate()
     {
-        if (target == null) return;
-
-        // Detecta hacia dónde mira el personaje
-        float direction = Mathf.Sign(target.localScale.x);
-        float targetOffsetX = offsetX * direction;
-
-        // Suaviza el cambio de lado
-        currentOffsetX = Mathf.Lerp(
-            currentOffsetX,
-            targetOffsetX,
-            smoothSpeed
-        );
-
-        Vector3 targetPosition = new Vector3(
-            target.position.x + currentOffsetX,
-            target.position.y + offsetY,
-            transform.position.z
-        );
-
-        transform.position = Vector3.Lerp(
-            transform.position,
-            targetPosition,
-            smoothSpeed
-        );
+        Vector3 posicionDeseada = objetivo.position + desplazamiento;
+        Vector3 posicionSuavizada = Vector3.Lerp(transform.position, posicionDeseada, velocidadCamara);
+        transform.position = posicionSuavizada;
     }
-
 }
