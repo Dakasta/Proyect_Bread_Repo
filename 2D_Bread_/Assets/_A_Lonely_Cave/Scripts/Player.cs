@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
 
         Flip();
         UpdateAttackDirection();
+        ani.SetBool("Camina", Mathf.Abs(moveInput.x) > 0.1f);
     }
 
     private void FixedUpdate()
@@ -119,18 +120,20 @@ public class Player : MonoBehaviour
 
     void Attack()
     {
-
-        
+        atak = true;
+        ani.SetBool("Ataca", true);
         StartCoroutine(DesactivarAtaque(0.3f));
         StartCoroutine(AttackCoroutine());
        
-        atak = true;
+      
     }
   
     IEnumerator DesactivarAtaque(float tiempo)
     {
         yield return new WaitForSeconds(tiempo);
-      
+        atak = false;
+        ani.SetBool("Ataca", false);
+
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
