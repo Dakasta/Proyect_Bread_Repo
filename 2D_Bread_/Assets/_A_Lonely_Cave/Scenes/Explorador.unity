@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517dd40a97a7e704ea78f48252c53647, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  acceleration: 20
+  moveSpeed: 8
   maxSpeed: 10
   linearDrag: 7
   jumpForce: 15
@@ -622,6 +622,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
+  coyoteTime: 0.1
+  jumpBufferTime: 0.1
 --- !u!61 &2048775509
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -683,7 +687,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

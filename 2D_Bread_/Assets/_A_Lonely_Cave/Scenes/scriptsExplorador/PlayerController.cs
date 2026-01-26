@@ -1,5 +1,4 @@
-﻿using Unity.Android.Gradle.Manifest;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -9,8 +8,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 8f;
-    [SerializeField] private float maxSpeed = 10f;
-    [SerializeField] private float linearDrag = 5f;
+    [SerializeField] private float maxSpeed = 8f;
+    [SerializeField] private float linearDrag = 6f;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 15f;
@@ -19,14 +18,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Better Jump")]
-    
+    [SerializeField] private float fallMultiplier = 3.5f;
+    [SerializeField] private float lowJumpMultiplier = 2.2f;
 
-    [SerializeField] private float fallMultiplier = 2.5f;
-    [SerializeField] private float lowJumpMultiplier = 2f;
+    [Header("Jump Assist")]
+    [SerializeField] private float coyoteTime = 0.1f;
+    [SerializeField] private float jumpBufferTime = 0.1f;
 
     private Vector2 moveInput;
     private bool isGrounded;
     private bool jumpHeld;
+
+    private float coyoteCounter;
+    private float jumpBufferCounter;
 
     private void Awake()
     {
@@ -36,6 +40,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckGround();
+        HandleTimers();
     }
 
     private void FixedUpdate()
@@ -43,6 +48,7 @@ public class PlayerController : MonoBehaviour
         MoveCharacter();
         ApplyLinearDrag();
         BetterJump();
+        TryJump();
     }
 
     // -------- INPUT SYSTEM --------
@@ -55,16 +61,18 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started)
+        {
             jumpHeld = true;
+            jumpBufferCounter = jumpBufferTime;
+        }
 
         if (context.canceled)
+        {
             jumpHeld = false;
-
-        if (context.performed && isGrounded)
-            Jump();
+        }
     }
 
-    // -------- MOVEMENT (SIMPLE) --------
+    // -------- MOVEMENT --------
 
     private void MoveCharacter()
     {
@@ -84,7 +92,17 @@ public class PlayerController : MonoBehaviour
         rb.linearDamping = Mathf.Abs(moveInput.x) < 0.1f ? linearDrag : 0f;
     }
 
-    // -------- JUMP --------
+    // -------- JUMP LOGIC --------
+
+    private void TryJump()
+    {
+        if (jumpBufferCounter > 0f && coyoteCounter > 0f)
+        {
+            Jump();
+            jumpBufferCounter = 0f;
+            coyoteCounter = 0f;
+        }
+    }
 
     private void Jump()
     {
@@ -92,18 +110,16 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
-    // -------- BETTER JUMP (SOLO GRAVEDAD) --------
+    // -------- BETTER JUMP (GRAVEDAD) --------
 
     private void BetterJump()
     {
-        // Caída más rápida
         if (rb.linearVelocity.y < 0f)
         {
             rb.linearVelocity += Vector2.up * Physics2D.gravity.y
                            * (fallMultiplier - 1f)
                            * Time.fixedDeltaTime;
         }
-        // Salto corto si suelta el botón
         else if (rb.linearVelocity.y > 0f && !jumpHeld)
         {
             rb.linearVelocity += Vector2.up * Physics2D.gravity.y
@@ -112,7 +128,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // -------- GROUND CHECK --------
+    // -------- GROUND / TIMERS --------
 
     private void CheckGround()
     {
@@ -121,6 +137,17 @@ public class PlayerController : MonoBehaviour
             groundCheckRadius,
             groundLayer
         );
+
+        if (isGrounded)
+            coyoteCounter = coyoteTime;
+    }
+
+    private void HandleTimers()
+    {
+        if (!isGrounded)
+            coyoteCounter -= Time.deltaTime;
+
+        jumpBufferCounter -= Time.deltaTime;
     }
 
     private void OnDrawGizmosSelected()
